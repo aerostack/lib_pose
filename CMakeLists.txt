@@ -8,7 +8,8 @@ project(${PROJECT_NAME})
 #see: http://stackoverflow.com/questions/10984442/how-to-detect-c11-support-of-a-compiler-with-cmake
 #add_definitions(-std=c++11)
 #add_definitions(-std=c++0x)
-add_definitions(-std=c++03)
+#add_definitions(-std=c++03)
+set(CMAKE_CXX_STANDARD 11)
 
 # Set the build type.  Options are:
 #  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
@@ -42,9 +43,12 @@ set(LIB_POSE_HEADER_FILES
 
 find_package(catkin REQUIRED)
 
-find_package(OpenCV REQUIRED)
+#find_package(OpenCV REQUIRED)
 
-
+find_package(OpenCV 4 QUIET)
+if(NOT OpenCV_FOUND)
+	find_package(OpenCV 3 REQUIRED)
+endif()
 
 catkin_package(
 	INCLUDE_DIRS ${LIB_POSE_INCLUDE_DIR}
